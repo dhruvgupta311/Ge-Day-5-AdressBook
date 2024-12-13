@@ -1,35 +1,59 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
 public class AddressBookMain {
-    private List<Contact> addressBook;
-
-    public AddressBookMain() {
-        this.addressBook = new ArrayList<>();
-    }
-
-    public void addContact(Contact contact) {
-        addressBook.add(contact);
-        System.out.println("Contact added: " + contact);
-    }
-
-    public void displayContacts() {
-        System.out.println("Contacts in Address Book:");
-        for (Contact contact : addressBook) {
-            System.out.println(contact);
-        }
-    }
-
     public static void main(String[] args) {
-        AddressBookMain addressBookMain = new AddressBookMain();
+        AddressBook addressBook = new AddressBook();
+        Scanner scanner = new Scanner(System.in);
+
         System.out.println("Welcome to Address Book Program");
-        System.out.println("Running on Main Branch");
+        boolean running = true;
 
-        // Add a contact
-        Contact contact = new Contact("John", "Doe", "123 Main St", "New York", "NY", "10001", "9876543210", "john.doe@example.com");
-        addressBookMain.addContact(contact);
+        while (running) {
+            System.out.println("\nMenu:");
+            System.out.println("1. Add Contact");
+            System.out.println("2. Display Contacts");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
 
-        // Display all contacts
-        addressBookMain.displayContacts();
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter First Name: ");
+                    String firstName = scanner.nextLine();
+                    System.out.print("Enter Last Name: ");
+                    String lastName = scanner.nextLine();
+                    System.out.print("Enter Address: ");
+                    String address = scanner.nextLine();
+                    System.out.print("Enter City: ");
+                    String city = scanner.nextLine();
+                    System.out.print("Enter State: ");
+                    String state = scanner.nextLine();
+                    System.out.print("Enter Zip: ");
+                    String zip = scanner.nextLine();
+                    System.out.print("Enter Phone Number: ");
+                    String phoneNumber = scanner.nextLine();
+                    System.out.print("Enter Email: ");
+                    String email = scanner.nextLine();
+
+                    Contact contact = new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email);
+                    addressBook.addContact(contact);
+                    break;
+
+                case 2:
+                    addressBook.displayContacts();
+                    break;
+
+                case 3:
+                    running = false;
+                    System.out.println("Exiting Address Book Program.");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+
+        scanner.close();
     }
 }
