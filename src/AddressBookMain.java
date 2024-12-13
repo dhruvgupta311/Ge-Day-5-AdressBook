@@ -2,22 +2,16 @@ import java.util.Scanner;
 
 public class AddressBookMain {
     public static void main(String[] args) {
-        AddressBook addressBook = new AddressBook();
         Scanner scanner = new Scanner(System.in);
+        AddressBook addressBook = new AddressBook();
 
-        System.out.println("Welcome to Address Book Program");
-        boolean running = true;
-
-        while (running) {
-            System.out.println("\nMenu:");
-            System.out.println("1. Add Contact");
-            System.out.println("2. Display Contacts");
-            System.out.println("3. Edit Contact");
-            System.out.println("4. Delete Contact");
-            System.out.println("5. Exit");
+        while (true) {
+            System.out.println("\n1. Add Contact");
+            System.out.println("2. Display All Contacts");
+            System.out.println("3. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine(); // Consume the newline character
 
             switch (choice) {
                 case 1:
@@ -43,35 +37,17 @@ public class AddressBookMain {
                     break;
 
                 case 2:
-                    addressBook.displayContacts();
+                    addressBook.displayAllContacts();
                     break;
 
                 case 3:
-                    System.out.print("Enter First Name of Contact to Edit: ");
-                    String editFirstName = scanner.nextLine();
-                    System.out.print("Enter Last Name of Contact to Edit: ");
-                    String editLastName = scanner.nextLine();
-                    addressBook.editContact(editFirstName, editLastName, scanner);
-                    break;
-
-                case 4:
-                    System.out.print("Enter First Name of Contact to Delete: ");
-                    String deleteFirstName = scanner.nextLine();
-                    System.out.print("Enter Last Name of Contact to Delete: ");
-                    String deleteLastName = scanner.nextLine();
-                    addressBook.deleteContact(deleteFirstName, deleteLastName);
-                    break;
-
-                case 5:
-                    running = false;
-                    System.out.println("Exiting Address Book Program.");
-                    break;
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
 
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
         }
-
-        scanner.close();
     }
 }
