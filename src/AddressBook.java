@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 public class AddressBook {
     private List<Contact> contacts;
 
@@ -51,6 +52,18 @@ public class AddressBook {
                 contact.setEmail(email);
 
                 System.out.println("Contact updated successfully.");
+                return true;
+            }
+        }
+        System.out.println("Contact not found.");
+        return false;
+    }
+
+    public boolean deleteContact(String firstName, String lastName) {
+        for (Contact contact : contacts) {
+            if (contact.getFirstName().equalsIgnoreCase(firstName) && contact.getLastName().equalsIgnoreCase(lastName)) {
+                contacts.remove(contact);
+                System.out.println("Contact deleted successfully.");
                 return true;
             }
         }

@@ -1,6 +1,5 @@
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
+
 public class AddressBookMain {
     public static void main(String[] args) {
         AddressBook addressBook = new AddressBook();
@@ -14,7 +13,8 @@ public class AddressBookMain {
             System.out.println("1. Add Contact");
             System.out.println("2. Display Contacts");
             System.out.println("3. Edit Contact");
-            System.out.println("4. Exit");
+            System.out.println("4. Delete Contact");
+            System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -55,6 +55,14 @@ public class AddressBookMain {
                     break;
 
                 case 4:
+                    System.out.print("Enter First Name of Contact to Delete: ");
+                    String deleteFirstName = scanner.nextLine();
+                    System.out.print("Enter Last Name of Contact to Delete: ");
+                    String deleteLastName = scanner.nextLine();
+                    addressBook.deleteContact(deleteFirstName, deleteLastName);
+                    break;
+
+                case 5:
                     running = false;
                     System.out.println("Exiting Address Book Program.");
                     break;
