@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Contact {
     private String firstName;
     private String lastName;
@@ -19,9 +21,29 @@ public class Contact {
         this.email = email;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return firstName.equals(contact.firstName) && lastName.equals(contact.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName);
+    }
+
     @Override
     public String toString() {
-        return "Name: " + firstName + " " + lastName + ", Address: " + address + ", City: " + city +
-                ", State: " + state + ", Zip: " + zip + ", Phone: " + phoneNumber + ", Email: " + email;
+        return firstName + " " + lastName + ", " + address + ", " + city + ", " + state + ", " + zip + ", " + phoneNumber + ", " + email;
     }
 }

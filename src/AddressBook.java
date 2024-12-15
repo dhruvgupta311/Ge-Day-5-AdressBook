@@ -1,32 +1,33 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddressBook {
-    private List<Contact> contacts;
     private String name;
+    private List<Contact> contacts;
 
     public AddressBook(String name) {
         this.name = name;
         this.contacts = new ArrayList<>();
     }
 
-    public void addContact(Contact contact) {
+    public boolean addContact(Contact contact) {
+        // Use Streams to check for duplicates
+        boolean exists = contacts.stream().anyMatch(existing -> existing.equals(contact));
+        if (exists) {
+            System.out.println("Duplicate contact found: " + contact.getFirstName() + " " + contact.getLastName());
+            return false;
+        }
         contacts.add(contact);
-        System.out.println("Contact added: " + contact);
+        System.out.println("Contact added successfully.");
+        return true;
     }
 
     public void displayAllContacts() {
         if (contacts.isEmpty()) {
-            System.out.println("Address Book is empty.");
+            System.out.println("No contacts in the address book.");
         } else {
-            System.out.println("All Contacts in Address Book '" + name + "':");
-            for (Contact contact : contacts) {
-                System.out.println(contact);
-            }
+            contacts.forEach(System.out::println);
         }
-    }
-
-    public String getName() {
-        return name;
     }
 }
