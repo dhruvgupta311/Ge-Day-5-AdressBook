@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 
 public class AddressBookMain {
@@ -9,13 +10,13 @@ public class AddressBookMain {
         while (true) {
             System.out.println("\n1. Add New Address Book");
             System.out.println("2. Add Contact to an Address Book");
-            System.out.println("3. Display Sorted Contacts by City");
-            System.out.println("4. Display Sorted Contacts by State");
-            System.out.println("5. Display Sorted Contacts by Zip");
+            System.out.println("3. Display Contacts of an Address Book");
+            System.out.println("4. Save Address Book to File");
+            System.out.println("5. Load Address Book from File");
             System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine(); // Consume newline
 
             switch (choice) {
                 case 1:
@@ -58,42 +59,31 @@ public class AddressBookMain {
                     break;
 
                 case 3:
-                    System.out.print("Enter Address Book Name to display sorted by city: ");
-                    String cityBookName = scanner.nextLine();
-                    AddressBook cityAddressBook = addressBookMap.get(cityBookName);
-                    if (cityAddressBook != null) {
-                        List<Contact> sortedByCity = cityAddressBook.getSortedContactsByCity();
-                        System.out.println("Sorted Contacts by City in Address Book '" + cityBookName + "':");
-                        sortedByCity.forEach(contact -> System.out.println(contact));
+                    System.out.print("Enter Address Book Name to display: ");
+                    String displayBookName = scanner.nextLine();
+                    AddressBook displayAddressBook = addressBookMap.get(displayBookName);
+                    if (displayAddressBook != null) {
+                        displayAddressBook.displayAllContacts();
                     } else {
-                        System.out.println("Address Book '" + cityBookName + "' does not exist.");
+                        System.out.println("Address Book '" + displayBookName + "' does not exist.");
                     }
                     break;
 
                 case 4:
-                    System.out.print("Enter Address Book Name to display sorted by state: ");
-                    String stateBookName = scanner.nextLine();
-                    AddressBook stateAddressBook = addressBookMap.get(stateBookName);
-                    if (stateAddressBook != null) {
-                        List<Contact> sortedByState = stateAddressBook.getSortedContactsByState();
-                        System.out.println("Sorted Contacts by State in Address Book '" + stateBookName + "':");
-                        sortedByState.forEach(contact -> System.out.println(contact));
+                    System.out.print("Enter Address Book Name to save to file: ");
+                    String saveBookName = scanner.nextLine();
+                    AddressBook saveAddressBook = addressBookMap.get(saveBookName);
+                    if (saveAddressBook != null) {
+                        saveAddressBookToFile(saveAddressBook, saveBookName);
                     } else {
-                        System.out.println("Address Book '" + stateBookName + "' does not exist.");
+                        System.out.println("Address Book '" + saveBookName + "' does not exist.");
                     }
                     break;
 
                 case 5:
-                    System.out.print("Enter Address Book Name to display sorted by zip: ");
-                    String zipBookName = scanner.nextLine();
-                    AddressBook zipAddressBook = addressBookMap.get(zipBookName);
-                    if (zipAddressBook != null) {
-                        List<Contact> sortedByZip = zipAddressBook.getSortedContactsByZip();
-                        System.out.println("Sorted Contacts by Zip in Address Book '" + zipBookName + "':");
-                        sortedByZip.forEach(contact -> System.out.println(contact));
-                    } else {
-                        System.out.println("Address Book '" + zipBookName + "' does not exist.");
-                    }
+                    System.out.print("Enter Address Book Name to load from file: ");
+                    String loadBookName = scanner.nextLine();
+                    loadAddressBookFromFile(loadBookName);
                     break;
 
                 case 6:
@@ -104,6 +94,39 @@ public class AddressBookMain {
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
+        }
+    }
+
+    // Method to save Address Book to a file
+    private static void saveAddressBookToFile(AddressBook addressBook, String bookName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(bookName + ".txt"))) {
+            for (Contact contact : addressBook.getContacts()) {
+                writer.write(contact.toString());
+                writer.newLine();
+            }
+            System.out.println("Address Book '" + bookName + "' saved to file.");
+        } catch (IOException e) {
+            System.out.println("Error while saving the Address Book to file: " + e.getMessage());
+        }
+    }
+
+    // Method to load Address Book from a file
+    private static void loadAddressBookFromFile(String bookName) {
+        File file = new File(bookName + ".txt");
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                AddressBook addressBook = new AddressBook(bookName);
+                while ((line = reader.readLine()) != null) {
+                    addressBook.addContact(Contact.fromString(line));
+                }
+                addressBookMap.put(bookName, addressBook);
+                System.out.println("Address Book '" + bookName + "' loaded from file.");
+            } catch (IOException e) {
+                System.out.println("Error while loading the Address Book from file: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Address Book file '" + bookName + "' not found.");
         }
     }
 }

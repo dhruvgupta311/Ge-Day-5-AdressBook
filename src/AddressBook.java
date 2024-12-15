@@ -1,37 +1,35 @@
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddressBook {
     private String name;
     private List<Contact> contacts;
 
-    public AddressBook(String name){
+    public AddressBook(String name) {
         this.name = name;
         this.contacts = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
     }
 
     public void addContact(Contact contact) {
         contacts.add(contact);
     }
 
-    // Method to sort contacts by city
-    public List<Contact> getSortedContactsByCity() {
-        return contacts.stream()
-                .sorted(Comparator.comparing(Contact::getCity))
-                .collect(Collectors.toList());
-    }
-
-    // Method to sort contacts by state
-    public List<Contact> getSortedContactsByState() {
-        return contacts.stream()
-                .sorted(Comparator.comparing(Contact::getState))
-                .collect(Collectors.toList());
-    }
-
-    // Method to sort contacts by zip code
-    public List<Contact> getSortedContactsByZip() {
-        return contacts.stream()
-                .sorted(Comparator.comparing(Contact::getZip))
-                .collect(Collectors.toList());
+    public void displayAllContacts() {
+        if (contacts.isEmpty()) {
+            System.out.println("No contacts available.");
+        } else {
+            System.out.println("Displaying all contacts in the address book '" + name + "':");
+            for (Contact contact : contacts) {
+                System.out.println(contact);
+            }
+        }
     }
 }

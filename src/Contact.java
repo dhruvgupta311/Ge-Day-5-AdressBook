@@ -43,15 +43,14 @@ public class Contact {
         return zip;
     }
 
-    // Override toString() to print the contact's details
     @Override
     public String toString() {
-        return "Name: " + firstName + " " + lastName +
-                "\nAddress: " + address +
-                "\nCity: " + city +
-                "\nState: " + state +
-                "\nZip: " + zip +
-                "\nPhone: " + phoneNumber +
-                "\nEmail: " + email + "\n";
+        return firstName + "," + lastName + "," + address + "," + city + "," + state + "," + zip + "," + phoneNumber + "," + email;
+    }
+
+    // Constructor to parse Contact from String data read from file
+    public static Contact fromString(String contactData) {
+        String[] data = contactData.split(",");
+        return new Contact(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]);
     }
 }
