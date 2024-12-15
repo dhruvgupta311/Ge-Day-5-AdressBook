@@ -9,8 +9,8 @@ public class AddressBookMain {
         while (true) {
             System.out.println("\n1. Add New Address Book");
             System.out.println("2. Add Contact to an Address Book");
-            System.out.println("3. View Persons by City Across All Address Books");
-            System.out.println("4. View Persons by State Across All Address Books");
+            System.out.println("3. Count Persons by City Across All Address Books");
+            System.out.println("4. Count Persons by State Across All Address Books");
             System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -57,24 +57,18 @@ public class AddressBookMain {
                     break;
 
                 case 3:
-                    System.out.println("Persons by City:");
+                    System.out.println("Count of Persons by City:");
                     addressBookMap.values().forEach(book -> {
-                        Map<String, List<Contact>> cityMap = book.getPersonsByCity();
-                        cityMap.forEach((city, persons) -> {
-                            System.out.println("City: " + city);
-                            persons.forEach(System.out::println);
-                        });
+                        Map<String, Long> countByCity = book.getCountByCity();
+                        countByCity.forEach((city, count) -> System.out.println("City: " + city + ", Count: " + count));
                     });
                     break;
 
                 case 4:
-                    System.out.println("Persons by State:");
+                    System.out.println("Count of Persons by State:");
                     addressBookMap.values().forEach(book -> {
-                        Map<String, List<Contact>> stateMap = book.getPersonsByState();
-                        stateMap.forEach((state, persons) -> {
-                            System.out.println("State: " + state);
-                            persons.forEach(System.out::println);
-                        });
+                        Map<String, Long> countByState = book.getCountByState();
+                        countByState.forEach((state, count) -> System.out.println("State: " + state + ", Count: " + count));
                     });
                     break;
 

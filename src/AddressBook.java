@@ -14,15 +14,15 @@ public class AddressBook {
         contacts.add(contact);
     }
 
-    // Method to group persons by city
-    public Map<String, List<Contact>> getPersonsByCity() {
+    // Method to count persons by city
+    public Map<String, Long> getCountByCity() {
         return contacts.stream()
-                .collect(Collectors.groupingBy(Contact::getCity));
+                .collect(Collectors.groupingBy(Contact::getCity, Collectors.counting()));
     }
 
-    // Method to group persons by state
-    public Map<String, List<Contact>> getPersonsByState() {
+    // Method to count persons by state
+    public Map<String, Long> getCountByState() {
         return contacts.stream()
-                .collect(Collectors.groupingBy(Contact::getState));
+                .collect(Collectors.groupingBy(Contact::getState, Collectors.counting()));
     }
 }
