@@ -19,16 +19,27 @@ public class Contact {
         this.email = email;
     }
 
-    public String getCity() {
-        return city;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getState() {
-        return state;
+    public String getLastName() {
+        return lastName;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    // Override the toString method to print the contact's details
     @Override
     public String toString() {
-        return firstName + " " + lastName + ", " + address + ", " + city + ", " + state + ", " + zip + ", " + phoneNumber + ", " + email;
+        return "Name: " + firstName + " " + lastName +
+                "\nAddress: " + address +
+                "\nCity: " + city +
+                "\nState: " + state +
+                "\nZip: " + zip +
+                "\nPhone: " + phoneNumber +
+                "\nEmail: " + email + "\n";
     }
 }

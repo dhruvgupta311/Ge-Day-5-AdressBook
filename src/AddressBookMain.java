@@ -9,9 +9,8 @@ public class AddressBookMain {
         while (true) {
             System.out.println("\n1. Add New Address Book");
             System.out.println("2. Add Contact to an Address Book");
-            System.out.println("3. Count Persons by City Across All Address Books");
-            System.out.println("4. Count Persons by State Across All Address Books");
-            System.out.println("5. Exit");
+            System.out.println("3. Display Sorted Contacts by Name");
+            System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
@@ -57,22 +56,19 @@ public class AddressBookMain {
                     break;
 
                 case 3:
-                    System.out.println("Count of Persons by City:");
-                    addressBookMap.values().forEach(book -> {
-                        Map<String, Long> countByCity = book.getCountByCity();
-                        countByCity.forEach((city, count) -> System.out.println("City: " + city + ", Count: " + count));
-                    });
+                    System.out.print("Enter Address Book Name to display sorted contacts: ");
+                    String displayBookName = scanner.nextLine();
+                    AddressBook displayAddressBook = addressBookMap.get(displayBookName);
+                    if (displayAddressBook != null) {
+                        List<Contact> sortedContacts = displayAddressBook.getSortedContactsByName();
+                        System.out.println("Sorted Contacts by Name in Address Book '" + displayBookName + "':");
+                        sortedContacts.forEach(contact -> System.out.println(contact));
+                    } else {
+                        System.out.println("Address Book '" + displayBookName + "' does not exist.");
+                    }
                     break;
 
                 case 4:
-                    System.out.println("Count of Persons by State:");
-                    addressBookMap.values().forEach(book -> {
-                        Map<String, Long> countByState = book.getCountByState();
-                        countByState.forEach((state, count) -> System.out.println("State: " + state + ", Count: " + count));
-                    });
-                    break;
-
-                case 5:
                     System.out.println("Exiting...");
                     scanner.close();
                     return;
