@@ -9,8 +9,10 @@ public class AddressBookMain {
         while (true) {
             System.out.println("\n1. Add New Address Book");
             System.out.println("2. Add Contact to an Address Book");
-            System.out.println("3. Display Sorted Contacts by Name");
-            System.out.println("4. Exit");
+            System.out.println("3. Display Sorted Contacts by City");
+            System.out.println("4. Display Sorted Contacts by State");
+            System.out.println("5. Display Sorted Contacts by Zip");
+            System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
@@ -56,19 +58,45 @@ public class AddressBookMain {
                     break;
 
                 case 3:
-                    System.out.print("Enter Address Book Name to display sorted contacts: ");
-                    String displayBookName = scanner.nextLine();
-                    AddressBook displayAddressBook = addressBookMap.get(displayBookName);
-                    if (displayAddressBook != null) {
-                        List<Contact> sortedContacts = displayAddressBook.getSortedContactsByName();
-                        System.out.println("Sorted Contacts by Name in Address Book '" + displayBookName + "':");
-                        sortedContacts.forEach(contact -> System.out.println(contact));
+                    System.out.print("Enter Address Book Name to display sorted by city: ");
+                    String cityBookName = scanner.nextLine();
+                    AddressBook cityAddressBook = addressBookMap.get(cityBookName);
+                    if (cityAddressBook != null) {
+                        List<Contact> sortedByCity = cityAddressBook.getSortedContactsByCity();
+                        System.out.println("Sorted Contacts by City in Address Book '" + cityBookName + "':");
+                        sortedByCity.forEach(contact -> System.out.println(contact));
                     } else {
-                        System.out.println("Address Book '" + displayBookName + "' does not exist.");
+                        System.out.println("Address Book '" + cityBookName + "' does not exist.");
                     }
                     break;
 
                 case 4:
+                    System.out.print("Enter Address Book Name to display sorted by state: ");
+                    String stateBookName = scanner.nextLine();
+                    AddressBook stateAddressBook = addressBookMap.get(stateBookName);
+                    if (stateAddressBook != null) {
+                        List<Contact> sortedByState = stateAddressBook.getSortedContactsByState();
+                        System.out.println("Sorted Contacts by State in Address Book '" + stateBookName + "':");
+                        sortedByState.forEach(contact -> System.out.println(contact));
+                    } else {
+                        System.out.println("Address Book '" + stateBookName + "' does not exist.");
+                    }
+                    break;
+
+                case 5:
+                    System.out.print("Enter Address Book Name to display sorted by zip: ");
+                    String zipBookName = scanner.nextLine();
+                    AddressBook zipAddressBook = addressBookMap.get(zipBookName);
+                    if (zipAddressBook != null) {
+                        List<Contact> sortedByZip = zipAddressBook.getSortedContactsByZip();
+                        System.out.println("Sorted Contacts by Zip in Address Book '" + zipBookName + "':");
+                        sortedByZip.forEach(contact -> System.out.println(contact));
+                    } else {
+                        System.out.println("Address Book '" + zipBookName + "' does not exist.");
+                    }
+                    break;
+
+                case 6:
                     System.out.println("Exiting...");
                     scanner.close();
                     return;
