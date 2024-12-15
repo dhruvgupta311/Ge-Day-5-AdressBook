@@ -1,8 +1,8 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBook {
-    public String name;
+    private String name;
     private List<Contact> contacts;
 
     public AddressBook(String name) {
@@ -14,9 +14,15 @@ public class AddressBook {
         contacts.add(contact);
     }
 
-    public List<Contact> getContactsByCityOrState(String cityOrState) {
+    // Method to group persons by city
+    public Map<String, List<Contact>> getPersonsByCity() {
         return contacts.stream()
-                .filter(contact -> contact.getCity().equalsIgnoreCase(cityOrState) || contact.getState().equalsIgnoreCase(cityOrState))
-                .toList();
+                .collect(Collectors.groupingBy(Contact::getCity));
+    }
+
+    // Method to group persons by state
+    public Map<String, List<Contact>> getPersonsByState() {
+        return contacts.stream()
+                .collect(Collectors.groupingBy(Contact::getState));
     }
 }

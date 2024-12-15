@@ -9,8 +9,9 @@ public class AddressBookMain {
         while (true) {
             System.out.println("\n1. Add New Address Book");
             System.out.println("2. Add Contact to an Address Book");
-            System.out.println("3. Search Contacts by City or State Across Address Books");
-            System.out.println("4. Exit");
+            System.out.println("3. View Persons by City Across All Address Books");
+            System.out.println("4. View Persons by State Across All Address Books");
+            System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
@@ -56,19 +57,28 @@ public class AddressBookMain {
                     break;
 
                 case 3:
-                    System.out.print("Enter City or State to Search: ");
-                    String cityOrState = scanner.nextLine();
-                    System.out.println("Searching across all address books...");
+                    System.out.println("Persons by City:");
                     addressBookMap.values().forEach(book -> {
-                        List<Contact> matches = book.getContactsByCityOrState(cityOrState);
-                        if (!matches.isEmpty()) {
-                            System.out.println("Matches in Address Book: " + book.name);
-                            matches.forEach(System.out::println);
-                        }
+                        Map<String, List<Contact>> cityMap = book.getPersonsByCity();
+                        cityMap.forEach((city, persons) -> {
+                            System.out.println("City: " + city);
+                            persons.forEach(System.out::println);
+                        });
                     });
                     break;
 
                 case 4:
+                    System.out.println("Persons by State:");
+                    addressBookMap.values().forEach(book -> {
+                        Map<String, List<Contact>> stateMap = book.getPersonsByState();
+                        stateMap.forEach((state, persons) -> {
+                            System.out.println("State: " + state);
+                            persons.forEach(System.out::println);
+                        });
+                    });
+                    break;
+
+                case 5:
                     System.out.println("Exiting...");
                     scanner.close();
                     return;
